@@ -1,27 +1,45 @@
 package graphImpl;
 
 import graph.Graph;
-import lombok.extern.slf4j.Slf4j;
-import sun.security.provider.certpath.Vertex;
+import vertex.Vertex;
 
-import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentMap;
 
 /**
- * Class for providing {@link Graph} interface implementation for undirected Graph.
+ * Class for providing {@link Graph} implementation for undirected Graph.
  */
-@Slf4j
-public class UndirectedGraph implements Graph {
+public class UndirectedGraph extends DirectedGraph {
 
-
-    public boolean addVertex(Vertex vertex) {
-        return false;
+    /**
+     * Create undirected graph using Adjacency List
+     *
+     * @param vertices
+     */
+    public UndirectedGraph(ConcurrentMap<Vertex, List<Vertex>> vertices) {
+        super(vertices);
     }
 
-    public boolean addEdge(Vertex vertex1, Vertex vertex2) {
-        return false;
+    /**
+     * Create graph without edges using list of vertices
+     *
+     * @param set of vertices
+     */
+    public UndirectedGraph(Set<Vertex> set) {
+        super(set);
     }
 
-    public LinkedList getPath(Vertex vertex1, Vertex vertex2) {
-        return null;
+    @Override
+    public void addEdge(Vertex vertex1, Vertex vertex2) {
+        super.addEdge(vertex1, vertex2);
+        vertices.get(vertex2).add(vertex1);
+    }
+
+    @Override
+    public String toString() {
+        return "UndirectedGraph{" +
+                "vertices=" + vertices +
+                '}';
     }
 }
